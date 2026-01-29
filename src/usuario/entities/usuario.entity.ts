@@ -19,7 +19,7 @@ export class UsuarioEntity {
   @Column()
   senha: string;
 
-  @Column()
+  @Column({default: true})
   status: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
