@@ -6,6 +6,7 @@ import {
 } from 'typeorm';
 
 import { PedidoStatusEnum } from '../enums/pedido-status.enum';
+import { PedidoStatusPagamentoEnum } from '../enums/pedido-status-pagamento.enum';
 
 @Entity({ name: 'pedido' })
 export class PedidoEntity {
@@ -25,8 +26,12 @@ export class PedidoEntity {
   @Column()
   valor_total: number;
 
-  @Column()
-  status_pagamento: string;
+  @Column({
+    type: 'enum',
+    enum: PedidoStatusPagamentoEnum,
+    default: PedidoStatusPagamentoEnum.PENDENTE
+  })
+  status_pagamento: PedidoStatusPagamentoEnum;
 
   @CreateDateColumn({ type: 'timestamp' })
   criado_em: Date;

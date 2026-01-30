@@ -21,7 +21,7 @@ export class ItemEntity {
   aceitar_pedido: boolean;
 
   @Column()
-  vende: boolean; // Valida se o item e para venda final ou se e materia prima
+  vende: boolean; // Valida se o item é para venda final ou se e materia prima
 
   @Column()
   controla_estoque: boolean; // Valida se o item entra no controle de estoque ou se nao entra(EX: Taxa de entrega e outros servicos/itens)
