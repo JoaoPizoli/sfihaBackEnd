@@ -1,6 +1,7 @@
 import { LoteEntity } from 'src/Estoque/lote/entity/lote.entity';
 import { ItemEntity } from 'src/item/entities/item.entity';
-import { Column, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { StatusEstoqueEnum } from '../enum/status-estoque.enum';
 
 @Entity({ name: 'estoque' })
 export class EstoqueEntity {
@@ -17,7 +18,11 @@ export class EstoqueEntity {
   @Column({ type: 'int', default: 0 })
   quantidade_atual: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: StatusEstoqueEnum,
+    default: StatusEstoqueEnum.EM_ESTOQUE
+  })
   status: string;
 
   @OneToMany(()=> LoteEntity, lote => lote.estoque)
