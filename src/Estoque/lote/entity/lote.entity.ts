@@ -20,7 +20,7 @@ export class LoteEntity {
   estoque: EstoqueEntity;
 
   @Column()
-  item_id: number; 
+  estoque_id: number; 
 
   @Column()
   data_validade: Date;

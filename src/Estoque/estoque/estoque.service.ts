@@ -7,18 +7,18 @@ import { UpdateEstoqueDto } from './dto/update-estoque.dto';
 
 
 @Injectable()
-export default class EstoqueService {
+export class EstoqueService {
     constructor(
         @InjectRepository(EstoqueEntity)
         private estoqueRepository: Repository<EstoqueEntity>
     ) {}
 
-    findAll(): Promise<EstoqueEntity[]>{
-        return this.estoqueRepository.find()
+    async findAll(): Promise<EstoqueEntity[]>{
+        return await this.estoqueRepository.find()
     }
 
-    findOne(id: number): Promise<EstoqueEntity | null>{
-        return this.estoqueRepository.findOneBy({ id: id })
+    async findOne(id: number): Promise<EstoqueEntity | null>{
+        return await this.estoqueRepository.findOneBy({ id: id })
     }
 
     async create(dadosEstoque: CreateEstoqueDto): Promise<EstoqueEntity | null>{

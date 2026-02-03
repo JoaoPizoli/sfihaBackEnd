@@ -6,18 +6,18 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 @Injectable()
-export default class LoteService {
+export class LoteService {
     constructor(
         @InjectRepository(LoteEntity)
         private loteRepository: Repository<LoteEntity>
     ){}
 
-    findAll(): Promise<LoteEntity[]>{
-        return this.loteRepository.find()
+    async findAll(): Promise<LoteEntity[]>{
+        return await this.loteRepository.find()
     }
 
-    findOne(id: number): Promise<LoteEntity | null>{
-        return this.loteRepository.findOneBy({id: id})
+    async findOne(id: number): Promise<LoteEntity | null>{
+        return await this.loteRepository.findOneBy({id: id})
     }
 
     async create(loteDados: CreateLoteDto): Promise<LoteEntity | null>{

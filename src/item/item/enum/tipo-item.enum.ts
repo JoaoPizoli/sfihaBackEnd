@@ -1,0 +1,5 @@
+export enum TipoItemEnum {
+    MATERIA_PRIMA = 'MATERIA_PRIMA',
+    VENDA_FINAL = 'VENDA_FINAL',
+    SERVICOS = 'SERVICOS'
+}

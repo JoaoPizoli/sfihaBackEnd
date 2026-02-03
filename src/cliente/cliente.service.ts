@@ -6,18 +6,18 @@ import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Injectable()
-export default class ClienteService {
+export class ClienteService {
     constructor(
         @InjectRepository(ClienteEntity)
         private clienteRepository: Repository<ClienteEntity> 
     ) {}
 
-    findAll(): Promise<ClienteEntity[]>{
-        return this.clienteRepository.find()
+    async findAll(): Promise<ClienteEntity[]>{
+        return await this.clienteRepository.find()
     }
 
-    findOne(id: number): Promise<ClienteEntity | null>{
-        return this.clienteRepository.findOneBy({id: id})
+    async findOne(id: number): Promise<ClienteEntity | null>{
+        return await this.clienteRepository.findOneBy({id: id})
     }
 
     async create(dadosClientes: CreateClienteDto): Promise<ClienteEntity | null>{

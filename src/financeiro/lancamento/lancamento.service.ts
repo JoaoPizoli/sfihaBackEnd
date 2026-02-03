@@ -6,18 +6,18 @@ import { CreateLancamentoDto } from "./dto/create-lancamento.dto";
 import { UpdateLancamentoDto } from "./dto/update-lancamento.dto";
 
 @Injectable()
-export default class LancamentoService{
+export class LancamentoService{
     constructor(
         @InjectRepository(LancamentoFinanceiroEntity)
         private lancamentoRepository: Repository<LancamentoFinanceiroEntity>
     ){}
 
-    findAll(): Promise<LancamentoFinanceiroEntity[]>{
-        return this.lancamentoRepository.find()
+    async findAll(): Promise<LancamentoFinanceiroEntity[]>{
+        return await this.lancamentoRepository.find()
     }
 
-    findOne(id: number): Promise<LancamentoFinanceiroEntity | null>{
-        return this.lancamentoRepository.findOneBy({id: id})
+    async findOne(id: number): Promise<LancamentoFinanceiroEntity | null>{
+        return await this.lancamentoRepository.findOneBy({id: id})
     }
 
     async create(dadosLancamento: CreateLancamentoDto): Promise<LancamentoFinanceiroEntity | null>{

@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { PedidoEntity } from 'src/pedido/pedido/entity/pedido.entity';
 
 @Entity({ name: 'cliente' })
 export class ClienteEntity {
@@ -12,6 +14,9 @@ export class ClienteEntity {
 
   @Column()
   nome: string;
+
+  @OneToMany(() => PedidoEntity, (pedido) => pedido.cliente)
+  pedidos: PedidoEntity[]
 
   @Column()
   telefone: number;

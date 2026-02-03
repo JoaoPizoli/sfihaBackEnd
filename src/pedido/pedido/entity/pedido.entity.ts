@@ -2,9 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { PedidoItemEntity } from 'src/pedido/pedido-item/entity/pedido_item.entity';
+import { ClienteEntity } from 'src/cliente/entity/cliente.entity';
 import { PedidoStatusEnum } from '../enums/pedido-status.enum';
 import { PedidoStatusPagamentoEnum } from '../enums/pedido-status-pagamento.enum';
 
@@ -13,8 +18,15 @@ export class PedidoEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ManyToOne(() => ClienteEntity, (cliente) => cliente.pedidos, { onDelete: 'RESTRICT'})
+  @JoinColumn({ name: 'cliente_id'})
+  cliente: ClienteEntity;
+
   @Column()
-  cliente_id: number; //FK de Cliente
+  cliente_id: number;
+
+  @OneToMany(() => PedidoItemEntity, (pedidoItem) => pedidoItem.pedido)
+  pedido_item: PedidoItemEntity[];
 
   @Column({
     type: 'enum',

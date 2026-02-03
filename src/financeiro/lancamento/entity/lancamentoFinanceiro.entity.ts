@@ -39,5 +39,5 @@ export class LancamentoFinanceiroEntity {
   referencia_tipo: LancamentoReferenciaTipoEnum
 
   @Column()
-  referencia_id: LancamentoReferenciaTipoEnum;
+  referencia_id: number;
 }

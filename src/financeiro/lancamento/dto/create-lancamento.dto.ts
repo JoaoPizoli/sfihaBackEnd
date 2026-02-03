@@ -20,5 +20,5 @@ export class CreateLancamentoDto {
 
     @IsNumber()
     @IsOptional()
-    referencia_id: LancamentoReferenciaTipoEnum;
+    referencia_id: number;
 }
