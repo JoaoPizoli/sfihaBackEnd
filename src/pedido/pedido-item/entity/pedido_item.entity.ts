@@ -22,9 +22,6 @@ export class PedidoItemEntity {
   item_id: number;
 
   @Column()
-  preco_unitario: number;
-
-  @Column()
   quantidade: number;
 
   @Column()

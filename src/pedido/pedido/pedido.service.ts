@@ -7,11 +7,14 @@ import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { PrecoItemService } from 'src/financeiro/preco-item/preco-item.service';
 import { PedidoStatusEnum } from './enums/pedido-status.enum';
 import { PedidoStatusPagamentoEnum } from './enums/pedido-status-pagamento.enum';
-
+import { UpdatePedidoDto } from './dto/update-pedido.dto';
+import { UpdateStatusPedidoDto } from './dto/update-status-pedido.dto';
+import { UpdateStatusFinanceiroPedidoDto } from './dto/update-status-financeiro-pedido.dto';
+import { CreatePedidoItemDto } from '../pedido-item/dto/create-pedido-item.dto';
 
 
 @Injectable()
-export default class PedidoService {
+export class PedidoService {
     constructor(
         @InjectRepository(PedidoEntity)
         private pedidoRepository: Repository<PedidoEntity>,
@@ -19,6 +22,8 @@ export default class PedidoService {
         private precoItemService: PrecoItemService
     ) {}
 
+    
+    //Cria o Pedido com os Itens
     async create(dadosPedido: CreatePedidoDto): Promise<PedidoEntity | null> {
         const itensId = dadosPedido.pedido_item.map( i => i.item_id)
         const precos = await this.precoItemService.findByItensId(itensId)
@@ -43,5 +48,49 @@ export default class PedidoService {
 
         return pedido
     }
+
+    async addItemOnPedido(id: string, dadosPedidoItem: CreatePedidoItemDto[]){
+        const
+    }
+
+    async findOne(id: string): Promise<PedidoEntity | null>{
+        return await this.pedidoRepository.findOneBy({ id: id })
+    }
+
+    //Lista o Pedido com os Itens
+    async findOneWithItens(id: string): Promise<PedidoEntity | null> {
+        return await this.pedidoRepository.findOne({
+            where: { id: id },
+            relations: { pedido_item: true }
+        })
+    }
+
+    //Faz o update do valorTotal
+    async updateValorTotal(id: string, valorTotal: number){
+        await this.pedidoRepository.update(id, { valor_total: valorTotal })
+        return await this.findOne(id)
+    }
+
+    // Update do Status do Pedido
+    async updateStatusPedido(id: string, novoStatus: UpdateStatusPedidoDto): Promise<PedidoEntity | null>{
+        await this.pedidoRepository.update(id, { status: novoStatus.status})
+        return await this.findOne(id)
+    }
+
+    //Update da situação financeira do Pedido
+    async updateStatusFinanceiroPedido(id: string, novoStatus: UpdateStatusFinanceiroPedidoDto): Promise<PedidoEntity | null>{
+        await this.pedidoRepository.update(id, { status_pagamento: novoStatus.status_pagamento })
+        return await this.findOne(id)
+    }
+
+    async updateItem(id: string, pedidoItem: CreatePedidoItemDto[]): Promise<PedidoEntity | null> {
+
+    }
+
+    //Deleta o pedido e consequentemento todos os itens dele
+    async delete(id: string): Promise<void>{
+        await this.pedidoRepository.delete({id: id})
+    }
+
 
 }

@@ -23,14 +23,14 @@ export class PrecoItemService{
         return await this.precoItemRepository.findOneBy({item_id: itemId})
     }
 
-    async findByItensId(itensId: Array<number>): Promise<PrecoItemEntity[]>{
+    async findByItensId(itensId: Array<number>): Promise<Array<Number>>{
         const preco = await this.precoItemRepository.createQueryBuilder('preco')
-                                                    .where('preco.item_id IN  (:...ids)', { ids: itensId })
-                                                    .distinctOn(['preco.item_id'])
-                                                    .orderBy('preco.item_id', 'ASC')
-                                                    .addOrderBy('preco.alterado_em', 'DESC')
-                                                    .getMany()
-        return preco
+            .where('preco.item_id IN  (:...ids)', { ids: itensId })
+            .distinctOn(['preco.item_id'])
+            .orderBy('preco.item_id', 'ASC')
+            .addOrderBy('preco.alterado_em', 'DESC')
+            .getMany()
+        return preco.map( i => i.valor)
     }
 
     async create(dadosPrecoItem: CreatePrecoItemDto): Promise<PrecoItemEntity | null>{
